@@ -45,12 +45,19 @@ class FieldAudio {
   private contactFilter?: BiquadFilterNode;
   enabled = prefs.sound;
 
+  setEnabled(enabled: boolean): void {
+    this.enabled = enabled;
+    if (this.context && this.master) {
+      this.master.gain.setTargetAtTime(enabled ? 0.2 : 0, this.context.currentTime, 0.025);
+    }
+  }
+
   async start(): Promise<void> {
     if (!this.enabled) return;
     if (!this.context) {
       this.context = new AudioContext();
       this.master = this.context.createGain();
-      this.master.gain.value = 0.2;
+      this.master.gain.value = this.enabled ? 0.2 : 0;
       this.master.connect(this.context.destination);
       const buffer = this.context.createBuffer(1, this.context.sampleRate * 2, this.context.sampleRate);
       const data = buffer.getChannelData(0);
@@ -131,6 +138,12 @@ async function main(): Promise<void> {
   camera.keysUp.push(87); camera.keysDown.push(83); camera.keysLeft.push(65); camera.keysRight.push(68);
   camera.checkCollisions = true; camera.ellipsoid = new Vector3(0.34, 0.82, 0.34);
   camera.attachControl(canvas, true); camera.setTarget(new Vector3(0, 0.9, 0));
+  const updateLookSettings = (): void => {
+    camera.angularSensibility = 4700 - prefs.sensitivity * 3600;
+    const mouseInput = camera.inputs.attached.mouse as { angularSensibilityY?: number } | undefined;
+    if (mouseInput) mouseInput.angularSensibilityY = prefs.invertY ? -camera.angularSensibility : camera.angularSensibility;
+  };
+  updateLookSettings();
 
   const sky = new HemisphericLight('HumidSky', new Vector3(0.25, 1, 0.15), scene);
   sky.intensity = 0.72; sky.diffuse = new Color3(0.74, 0.84, 0.92); sky.groundColor = new Color3(0.24, 0.18, 0.13);
@@ -224,8 +237,8 @@ async function main(): Promise<void> {
 
   function persist(): void {
     prefs.sensitivity = +sensitivity.value; prefs.fov = +fov.value; prefs.invertY = invertY.checked;
-    prefs.sound = sound.checked; prefs.reducedMotion = reducedMotion.checked; audio.enabled = prefs.sound;
-    camera.angularSensibility = 4700 - prefs.sensitivity * 3600; camera.fov = prefs.fov * Math.PI / 180;
+    prefs.sound = sound.checked; prefs.reducedMotion = reducedMotion.checked; audio.setEnabled(prefs.sound);
+    updateLookSettings(); camera.fov = prefs.fov * Math.PI / 180;
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(prefs));
   }
   sensitivity.value = String(prefs.sensitivity); fov.value = String(prefs.fov); invertY.checked = prefs.invertY;
