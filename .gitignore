@@ -6,6 +6,7 @@ playwright-report/
 *.tsbuildinfo
 *.blend1
 .vercel/
+**/.vercel/
 unreal/**/Binaries/
 unreal/**/DerivedDataCache/
 unreal/**/Intermediate/
