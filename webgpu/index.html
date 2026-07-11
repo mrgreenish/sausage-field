@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#777a58" />
+    <title>Sausage Field — WebGPU Hero Slice</title>
+  </head>
+  <body>
+    <canvas id="renderCanvas" aria-label="Babylon.js WebGPU sausage field"></canvas>
+    <section id="entry">
+      <p class="eyebrow">WebGPU material study 01</p>
+      <h1>Sausage<br><i>Field</i></h1>
+      <p>Twenty living specimens in wet meadow grass. Each has its own girth, moisture and firmness. Walk into them or press exactly where the reticle settles.</p>
+      <div id="status">Preparing WebGPU renderer…</div>
+      <button id="enter" disabled>Enter study <span>↗</span></button>
+      <button id="settingsButton" class="secondary">Settings <span>••</span></button>
+      <small>WASD · mouse look · hold to press · Esc to release</small>
+    </section>
+    <aside id="settings" class="hidden" aria-label="Settings">
+      <div class="settingsHead"><span>Field settings</span><button id="closeSettings" aria-label="Close settings">×</button></div>
+      <label>Sensitivity <input id="sensitivity" type="range" min="0.1" max="1" step="0.05"></label>
+      <label>Field of view <input id="fov" type="range" min="50" max="85" step="1"></label>
+      <label class="check"><input id="invertY" type="checkbox"> Invert vertical look</label>
+      <label class="check"><input id="sound" type="checkbox"> Spatial field sound</label>
+      <label class="check"><input id="reducedMotion" type="checkbox"> Reduced camera motion</label>
+    </aside>
+    <div id="reticle" aria-hidden="true"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

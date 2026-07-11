@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "assetId": "sausage-field.hero-fatty-v1",
+  "units": "meters",
+  "upAxis": "Y",
+  "source": {
+    "blend": "../art/blender/sausage-field-hero.blend",
+    "generator": "../art/blender/generate_hero.py"
+  },
+  "geometry": {
+    "height": 1.4,
+    "rootRadius": 0.095,
+    "lods": [
+      { "name": "hero_high", "glb": "models/sausage-hero-high.glb", "fbx": "models/sausage-hero-high.fbx" },
+      { "name": "hero_mid", "glb": "models/sausage-hero-mid.glb", "fbx": "models/sausage-hero-mid.fbx" },
+      { "name": "hero_low", "glb": "models/sausage-hero-low.glb", "fbx": "models/sausage-hero-low.fbx" }
+    ]
+  },
+  "skeleton": {
+    "root": "SausageRoot",
+    "bones": ["SausageRoot", "Sausage_01", "Sausage_02", "Sausage_03", "Sausage_04", "Sausage_05", "Sausage_06", "SausageTip"]
+  },
+  "textures": {
+    "baseColor": "textures/hero-basecolor.png",
+    "normal": "textures/hero-normal.png",
+    "orm": "textures/hero-orm.png",
+    "coat": "textures/hero-coat.png",
+    "thickness": "textures/hero-thickness.png",
+    "veins": "textures/hero-veins.png"
+  },
+  "material": {
+    "metallic": 0,
+    "roughness": 0.34,
+    "ior": 1.42,
+    "clearcoat": 0.86,
+    "clearcoatRoughness": 0.09,
+    "subsurfaceColor": [0.72, 0.16, 0.12],
+    "subsurfaceStrength": 0.22
+  },
+  "physics": {
+    "solver": "eight-bone-rooted-rod",
+    "firmness": 0.58,
+    "damping": 0.94,
+    "maxBendDegrees": 38
+  }
+}

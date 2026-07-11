@@ -1,0 +1,6 @@
+packages:
+  - webgpu
+
+allowBuilds:
+  esbuild: true
+  sharp: true
