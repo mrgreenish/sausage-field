@@ -1,0 +1,13 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "5.8",
+  "Category": "Visualization",
+  "Description": "Photorealistic Sausage Field reference slice",
+  "Plugins": [
+    { "Name": "PythonScriptPlugin", "Enabled": true },
+    { "Name": "EditorScriptingUtilities", "Enabled": true },
+    { "Name": "PCG", "Enabled": true },
+    { "Name": "ControlRig", "Enabled": true },
+    { "Name": "ChaosFlesh", "Enabled": false }
+  ]
+}
