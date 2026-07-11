@@ -29,9 +29,7 @@ export class RodSolver {
   setLimit(limit: number): void {
     this.maxActive = limit;
     while (this.active.size > limit) {
-      const first = this.active.keys().next().value as number | undefined;
-      if (first === undefined) break;
-      this.active.delete(first);
+      if (!this.evictLeastActive()) break;
     }
   }
 
@@ -39,11 +37,7 @@ export class RodSolver {
     const existing = this.active.get(spec.id);
     if (existing) return existing;
     if (this.active.size >= this.maxActive) {
-      let quietest: RodState | undefined;
-      for (const state of this.active.values()) {
-        if (!quietest || state.lastImpulse < quietest.lastImpulse) quietest = state;
-      }
-      if (quietest) this.active.delete(quietest.spec.id);
+      this.evictLeastActive();
     }
 
     const positions: Vector3[] = [];
@@ -116,6 +110,16 @@ export class RodSolver {
 
   reset(): void {
     this.active.clear();
+  }
+
+  private evictLeastActive(): boolean {
+    let quietest: RodState | undefined;
+    for (const state of this.active.values()) {
+      if (!quietest || state.lastImpulse < quietest.lastImpulse) quietest = state;
+    }
+    if (!quietest) return false;
+    this.active.delete(quietest.spec.id);
+    return true;
   }
 
   private integrate(state: RodState, dt: number, elapsed: number): void {

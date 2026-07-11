@@ -46,4 +46,20 @@ describe('rod solver', () => {
       }
     }
   });
+
+  it('keeps the most recently active rods when the active limit is reduced', () => {
+    const solver = new RodSolver(3);
+    const quiet = solver.wake(spec(1, 0.3));
+    const active = solver.wake(spec(2, 0.3));
+    const mostActive = solver.wake(spec(3, 0.3));
+    quiet.lastImpulse = 0.02;
+    active.lastImpulse = 0.18;
+    mostActive.lastImpulse = 0.42;
+
+    solver.setLimit(2);
+
+    expect(solver.active.has(quiet.spec.id)).toBe(false);
+    expect(solver.active.has(active.spec.id)).toBe(true);
+    expect(solver.active.has(mostActive.spec.id)).toBe(true);
+  });
 });

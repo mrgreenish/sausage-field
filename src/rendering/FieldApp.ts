@@ -186,8 +186,8 @@ export class FieldApp {
     this.animationFrame = requestAnimationFrame(this.animate);
   }
 
-  async enter(): Promise<void> {
-    if (this.contextLost) return;
+  async enter(): Promise<boolean> {
+    if (this.contextLost) return false;
     await this.audio.start();
     this.audio.setEnabled(this.settings.sound);
     this.paused = false;
@@ -200,6 +200,7 @@ export class FieldApp {
       this.paused = false;
       this.callbacks.onLockChange(true);
     }
+    return true;
   }
 
   pause(): void {

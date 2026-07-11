@@ -130,10 +130,11 @@ syncControls();
 
 enterButton.addEventListener('click', async () => {
   if (!ready || !field) return;
+  const entered = await field.enter();
+  if (!entered) return;
   started = true;
   enterButton.querySelector('span')!.textContent = 'Return to field';
   entry.classList.add('is-leaving');
-  await field.enter();
   setTimeout(() => entry.classList.add('is-hidden'), 650);
 });
 

@@ -27,7 +27,7 @@ interface PlantState {
   firmness: number; moisture: number; height: number; radius: number; lastContact: number;
 }
 
-const SETTINGS_KEY = 'sausage-field.settings.v1';
+const SETTINGS_KEY = 'sausage-field.webgpu-settings.v1';
 const defaults: Settings = { sensitivity: 0.5, fov: 64, invertY: false, sound: true, reducedMotion: false };
 const saved = (() => { try { return JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? '{}'); } catch { return {}; } })();
 const prefs: Settings = { ...defaults, ...saved };
